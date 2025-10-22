@@ -1,0 +1,141 @@
+/* Logo Carousel Container */
+.logo-carousel-container {
+  width: 100%;
+  overflow: hidden;
+  margin: 2rem 0;
+  padding: 1rem 0;
+  position: relative;
+}
+
+
+
+/* Carousel Track */
+.logo-carousel {
+  display: flex;
+  width: 200%; /* Double width to accommodate duplicated logos */
+  animation: scroll-left 30s linear infinite;
+  gap: 2rem;
+  align-items: center;
+}
+
+/* Individual Logo Card */
+.logo-card {
+  flex: 0 0 auto;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 1rem;
+  border-radius: 15px;
+  border: 2px solid rgba(117, 117, 117, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Logo Image Container */
+.logo-image-container {
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+/* Logo Image */
+.logo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Logo Name */
+.logo-name {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Scroll Animation */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .logo-card {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .logo-image-container {
+    width: 90px;
+    height: 90px;
+  }
+  
+  .logo-carousel {
+    gap: 1.5rem;
+  }
+  
+  .logo-carousel-container::before,
+  .logo-carousel-container::after {
+    width: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-card {
+    width: 120px;
+    height: 120px;
+    padding: 0.75rem;
+  }
+  
+  .logo-image-container {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .logo-name {
+    font-size: 0.8rem;
+  }
+  
+  .logo-carousel {
+    gap: 1rem;
+  }
+}
+
+/* Smooth scroll behavior */
+.logo-carousel {
+  will-change: transform;
+}
+
+/* Loading state */
+.logo-image {
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0.1) 25%, 
+    rgba(255, 255, 255, 0.2) 50%, 
+    rgba(255, 255, 255, 0.1) 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
