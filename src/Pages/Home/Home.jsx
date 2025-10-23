@@ -9,10 +9,10 @@ import Stats from "./Stats";
 import CurvedLoop from './CurvedLoop';
 import AboutMe from "./AboutMe";
 import LatestProjects from "./LatestProjects";
-import ParticleBackground from "../../components/ParticleBackground";
-import TestimonialCarousel from "../../components/TestimonialCarousel";
-import InteractiveDemo from "../../components/InteractiveDemo";
-import CTA from "../../components/CTA";
+import ParticleBackground from "../../Components/ParticleBackground";
+import TestimonialCarousel from "../../Components/TestimonialCarousel";
+import InteractiveDemo from "../../Components/InteractiveDemo";
+import CTA from "../../Components/CTA";
 
 gsap.registerPlugin(ScrollTrigger);
 
