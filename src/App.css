@@ -7,10 +7,3 @@
     --font-merriweather: 'Merriweather', serif;
     --font-playfair: 'DM Sans', sans-serif;
 }
-
-.clip-circle-0 {
-  clip-path: circle(0% at 100% 0%);
-}
-.clip-circle-100 {
-  clip-path: circle(150% at 100% 0%);
-}
