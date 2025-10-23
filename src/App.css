@@ -1,9 +1,12 @@
-@import "tailwindcss";
+/* Import fonts first */
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap');
 
-:root{
-    --font-dm-sans: 'DM Sans', sans-serif;
-    --font-instrument-sans: 'Instrument Sans', sans-serif;
-    --font-merriweather: 'Merriweather', serif;
-    --font-playfair: 'DM Sans', sans-serif;
+/* Then import Tailwind */
+@import "tailwindcss";
+
+:root {
+  --font-dm-sans: 'DM Sans', sans-serif;
+  --font-instrument-sans: 'Instrument Sans', sans-serif;
+  --font-merriweather: 'Merriweather', serif;
+  --font-playfair: 'DM Sans', sans-serif;
 }
