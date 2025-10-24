@@ -3,8 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-// Importing CSS styles
-import './Navbar.css';
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);

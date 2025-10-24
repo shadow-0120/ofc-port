@@ -58,7 +58,7 @@ export default function App() {
   
   return (
       <Router>
-        <div className="bg-black text-white min-h-screen">
+        <div className="">
           <PerformanceOptimizer />
           <Navbar />
           <main>
