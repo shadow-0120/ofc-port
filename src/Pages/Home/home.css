@@ -552,7 +552,7 @@ html {
 /* Mobile Devices */
 @media (max-width: 768px) {
   .home-section {
-    padding: 60px 15px;
+    padding: 160px 15px;
   }
   
   .floating-elements {

@@ -1,0 +1,830 @@
+/* CSS Variables for Consistent Theme */
+:root {
+	--dark-space: #0a0a1a;
+	--deep-space: #15152b;
+	--text-primary: #ffffff;
+	--text-secondary: #a0a0c0;
+	--primary-glow: #00ffff5e;
+	--secondary-glow: #7c68ee93;
+	--tertiary-glow: #ff00ff71;
+	--nebula-purple: #892be277;
+	--nebula-blue: #1e8fff77;
+	--transition-fast: 0.3s ease;
+	--transition-slow: 0.6s ease;
+}
+
+/* Base Navbar Styles */
+.cosmic-navbar {
+	position: fixed;
+	top: 1rem;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 95%;
+	max-width: 1400px;
+	padding: 1rem 2rem;
+	background: rgba(10, 10, 26, 0.6);
+	backdrop-filter: blur(20px);
+	z-index: 1000;
+	border: 1px solid rgba(0, 255, 255, 0.1);
+	border-radius: 40px;
+	transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	box-shadow: 
+		0 8px 32px rgba(0, 0, 0, 0.3),
+		inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.cosmic-navbar.scrolled {
+	top: 0.5rem;
+	background: linear-gradient(135deg, 
+		rgba(10, 10, 26, 0.95) 0%,
+		rgba(21, 21, 43, 0.95) 50%,
+		rgba(74, 0, 255, 0.15) 100%);
+	backdrop-filter: blur(30px);
+	border: 1px solid rgba(0, 255, 255, 0.2);
+	box-shadow: 
+		0 10px 40px rgba(0, 255, 255, 0.15),
+		0 0 80px rgba(0, 255, 255, 0.05);
+	transform: translateX(-50%) scale(0.98);
+}
+
+.nav-inner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	position: relative;
+	z-index: 2;
+}
+
+/* Enhanced Logo Styles */
+.logo {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	text-decoration: none;
+	position: relative;
+	z-index: 3;
+	transition: var(--transition-fast);
+}
+
+.logo:hover {
+	transform: translateY(-2px);
+}
+
+.logo-orb {
+	position: relative;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	background: linear-gradient(135deg, var(--primary-glow), var(--secondary-glow));
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	animation: orb-rotate 8s linear infinite;
+	box-shadow: 
+		0 0 30px var(--primary-glow),
+		0 0 60px rgba(0, 255, 255, 0.3);
+}
+
+.orb-core {
+	width: 20px;
+	height: 20px;
+	background: var(--dark-space);
+	border-radius: 50%;
+	position: relative;
+	z-index: 2;
+}
+
+.orb-glow {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: conic-gradient(from 0deg, var(--primary-glow), var(--secondary-glow), var(--tertiary-glow), var(--primary-glow));
+	border-radius: 50%;
+	animation: orb-glow 4s linear infinite;
+	filter: blur(10px);
+	opacity: 0.7;
+}
+
+.logo-text {
+	display: flex;
+	flex-direction: column;
+	line-height: 1;
+}
+
+.logo-main {
+	font-size: 1.5rem;
+	font-weight: 700;
+	background: linear-gradient(135deg, var(--text-primary), var(--primary-glow));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	letter-spacing: 2px;
+}
+
+.logo-sub {
+	font-size: 0.9rem;
+	font-weight: 500;
+	color: var(--text-secondary);
+	letter-spacing: 1px;
+}
+
+/* Enhanced Navigation Links */
+.nav-links {
+	display: flex;
+	align-items: center;
+	gap: 2rem;
+}
+
+.nav-links ul {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.nav-item {
+	position: relative;
+}
+
+.nav-item a {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	text-decoration: none;
+	color: var(--text-secondary);
+	font-weight: 600;
+	font-size: 0.95rem;
+	padding: 0.7rem 1.2rem;
+	border-radius: 25px;
+	transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	position: relative;
+	overflow: hidden;
+	background: rgba(255, 255, 255, 0.02);
+}
+
+.nav-item a:hover {
+	color: var(--text-primary);
+	background: rgba(0, 255, 255, 0.1);
+	transform: translateY(-2px);
+	box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
+}
+
+.nav-item.active a {
+	color: var(--text-primary);
+	background: rgba(0, 255, 255, 0.15);
+}
+
+.nav-icon {
+	font-size: 1rem;
+	transition: var(--transition-fast);
+	filter: drop-shadow(0 0 5px currentColor);
+}
+
+.nav-item:hover .nav-icon {
+	transform: scale(1.3) rotate(10deg);
+	filter: drop-shadow(0 0 10px var(--primary-glow));
+}
+
+.nav-underline {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 0;
+	height: 2px;
+	background: linear-gradient(90deg, var(--primary-glow), var(--secondary-glow));
+	transition: var(--transition-fast);
+	transform: translateX(-50%);
+	border-radius: 2px;
+}
+
+.nav-item:hover .nav-underline,
+.nav-item.active .nav-underline {
+	width: 70%;
+}
+
+.nav-glow {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 0;
+	height: 0;
+	background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+	transition: var(--transition-slow);
+	transform: translate(-50%, -50%);
+	border-radius: 50%;
+	opacity: 0;
+}
+
+.nav-item:hover .nav-glow {
+	width: 100px;
+	height: 100px;
+	opacity: 0.1;
+}
+
+/* Enhanced CTA Button */
+.nav-cta {
+	margin-left: 1rem;
+}
+
+.btn-resume {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0.8rem 1.8rem;
+	background: linear-gradient(135deg, var(--primary-glow), var(--secondary-glow));
+	color: var(--dark-space);
+	text-decoration: none;
+	font-weight: 700;
+	font-size: 0.9rem;
+	border-radius: 30px;
+	overflow: hidden;
+	transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	box-shadow: 
+		0 0 25px var(--primary-glow),
+		0 0 50px rgba(0, 255, 255, 0.3);
+}
+
+.btn-resume:hover {
+	transform: translateY(-3px) scale(1.05);
+	box-shadow: 
+		0 0 35px var(--primary-glow),
+		0 0 70px rgba(0, 255, 255, 0.5);
+}
+
+.btn-hover-effect {
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+	transition: var(--transition-slow);
+}
+
+.btn-resume:hover .btn-hover-effect {
+	left: 100%;
+}
+
+.btn-sparkles {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.sparkle {
+	position: absolute;
+	width: 3px;
+	height: 3px;
+	background: white;
+	border-radius: 50%;
+	opacity: 0;
+}
+
+.btn-resume:hover .sparkle {
+	animation: sparkle-pop 0.6s ease-out forwards;
+}
+
+/* Enhanced Hologram Burger Menu */
+.hologram-burger {
+	display: none;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 50px;
+	height: 50px;
+	background: rgba(0, 255, 255, 0.1);
+	border: 1px solid var(--primary-glow);
+	border-radius: 50%;
+	cursor: pointer;
+	position: relative;
+	z-index: 1001;
+	transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	backdrop-filter: blur(10px);
+}
+
+.hologram-burger:hover {
+	background: rgba(0, 255, 255, 0.2);
+	box-shadow: 
+		0 0 25px var(--primary-glow),
+		inset 0 0 15px rgba(0, 255, 255, 0.2);
+	transform: scale(1.1);
+}
+
+.hologram-line {
+	width: 25px;
+	height: 2px;
+	background: var(--primary-glow);
+	margin: 3px 0;
+	transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	position: relative;
+	border-radius: 2px;
+}
+
+.hologram-line::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: var(--secondary-glow);
+	filter: blur(3px);
+	opacity: 0.7;
+	border-radius: 2px;
+}
+
+.hologram-burger.is-active .top {
+	transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hologram-burger.is-active .middle {
+	opacity: 0;
+	transform: translateX(-10px);
+}
+
+.hologram-burger.is-active .bottom {
+	transform: rotate(-45deg) translate(6px, -6px);
+}
+
+.hologram-glow {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 0;
+	height: 0;
+	background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+	border-radius: 50%;
+	transform: translate(-50%, -50%);
+	transition: var(--transition-slow);
+	opacity: 0;
+}
+
+.hologram-burger:hover .hologram-glow,
+.hologram-burger.is-active .hologram-glow {
+	width: 80px;
+	height: 80px;
+	opacity: 0.3;
+}
+
+/* Enhanced Cosmic Background Elements */
+.cosmic-background {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	overflow: hidden;
+	z-index: 1;
+	border-radius: 40px;
+}
+
+.nebula {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: 
+		radial-gradient(circle at 20% 80%, var(--nebula-purple) 0%, transparent 50%),
+		radial-gradient(circle at 80% 20%, var(--nebula-blue) 0%, transparent 50%);
+	opacity: 0.1;
+	animation: nebula-float 20s ease-in-out infinite;
+}
+
+.floating-particles {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.particle {
+	position: absolute;
+	background: var(--primary-glow);
+	border-radius: 50%;
+	animation: particle-float 15s linear infinite;
+	opacity: 0.6;
+}
+
+.particle:nth-child(odd) {
+	background: var(--secondary-glow);
+	animation-duration: 20s;
+	animation-delay: -5s;
+}
+
+.energy-grid {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: 
+		linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+	background-size: 50px 50px;
+	animation: grid-move 20s linear infinite;
+	opacity: 0.1;
+}
+
+/* Enhanced Mobile Cosmic Menu */
+.mobile-cosmic-menu {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	background: linear-gradient(135deg, var(--dark-space) 0%, var(--deep-space) 100%);
+	z-index: 999;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	visibility: hidden;
+	transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.mobile-cosmic-menu.active {
+	opacity: 1;
+	visibility: visible;
+}
+
+.mobile-cosmic-menu.active .cosmic-portal {
+	transform: translate(-50%, -50%) scale(1);
+}
+
+.cosmic-portal {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) scale(0.8);
+	width: 300px;
+	height: 300px;
+	transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.portal-ring {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	border: 2px solid var(--primary-glow);
+	border-radius: 50%;
+	transform: translate(-50%, -50%);
+	animation: portal-rotate 10s linear infinite;
+	box-shadow: 0 0 20px currentColor;
+}
+
+.portal-ring.outer {
+	width: 300px;
+	height: 300px;
+	border-color: var(--primary-glow);
+	animation-duration: 15s;
+}
+
+.portal-ring.middle {
+	width: 200px;
+	height: 200px;
+	border-color: var(--secondary-glow);
+	animation-duration: 12s;
+	animation-direction: reverse;
+}
+
+.portal-ring.inner {
+	width: 100px;
+	height: 100px;
+	border-color: var(--tertiary-glow);
+	animation-duration: 8s;
+}
+
+.portal-core {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 20px;
+	height: 20px;
+	background: var(--text-primary);
+	border-radius: 50%;
+	transform: translate(-50%, -50%);
+	box-shadow: 
+		0 0 30px var(--primary-glow),
+		0 0 60px var(--secondary-glow);
+	animation: core-pulse 2s ease-in-out infinite;
+}
+
+.cosmic-nav {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1.5rem;
+	z-index: 2;
+	margin-bottom: 2rem;
+}
+
+.cosmic-nav-item {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	text-decoration: none;
+	color: var(--text-secondary);
+	font-size: 1.3rem;
+	font-weight: 600;
+	padding: 1.2rem 2.5rem;
+	border-radius: 50px;
+	transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	position: relative;
+	overflow: hidden;
+	opacity: 0;
+	transform: translateY(30px);
+	animation: cosmic-item-appear 0.6s ease-out forwards;
+	background: rgba(255, 255, 255, 0.05);
+	backdrop-filter: blur(10px);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cosmic-nav-item:hover,
+.cosmic-nav-item.active {
+	color: var(--text-primary);
+	background: rgba(0, 255, 255, 0.15);
+	transform: translateX(20px) scale(1.05);
+	box-shadow: 
+		0 5px 25px rgba(0, 255, 255, 0.3),
+		inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.cosmic-item-orb {
+	width: 12px;
+	height: 12px;
+	background: var(--primary-glow);
+	border-radius: 50%;
+	box-shadow: 0 0 15px var(--primary-glow);
+	transition: var(--transition-fast);
+}
+
+.cosmic-nav-item:hover .cosmic-item-orb {
+	background: var(--secondary-glow);
+	box-shadow: 0 0 25px var(--secondary-glow);
+	transform: scale(1.5);
+}
+
+.cosmic-item-trail {
+	position: absolute;
+	top: 50%;
+	left: -100%;
+	width: 100%;
+	height: 2px;
+	background: linear-gradient(90deg, transparent, var(--primary-glow), transparent);
+	transform: translateY(-50%);
+	transition: var(--transition-slow);
+}
+
+.cosmic-nav-item:hover .cosmic-item-trail {
+	left: 100%;
+}
+
+.cosmic-cta {
+	margin-top: 2rem;
+	z-index: 2;
+}
+
+.cosmic-resume-btn {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1.2rem 2.5rem;
+	background: linear-gradient(135deg, var(--primary-glow), var(--secondary-glow));
+	color: var(--dark-space);
+	text-decoration: none;
+	font-weight: 800;
+	font-size: 1.1rem;
+	border-radius: 35px;
+	overflow: hidden;
+	transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	box-shadow: 
+		0 0 30px var(--primary-glow),
+		0 0 60px rgba(0, 255, 255, 0.4);
+}
+
+.cosmic-resume-btn:hover {
+	transform: scale(1.1);
+	box-shadow: 
+		0 0 40px var(--primary-glow),
+		0 0 80px rgba(0, 255, 255, 0.6);
+}
+
+.quantum-ripple {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 0;
+	height: 0;
+	background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
+	border-radius: 50%;
+	transform: translate(-50%, -50%);
+	transition: var(--transition-fast);
+	opacity: 0;
+}
+
+.cosmic-resume-btn:hover .quantum-ripple {
+	width: 200px;
+	height: 200px;
+	opacity: 0.3;
+}
+
+/* Enhanced Animations */
+@keyframes orb-rotate {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(360deg); }
+}
+
+@keyframes orb-glow {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(360deg); }
+}
+
+@keyframes nebula-float {
+	0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.1; }
+	50% { transform: translate(-10px, -10px) scale(1.1); opacity: 0.15; }
+}
+
+@keyframes particle-float {
+	0% {
+		transform: translate(0, 0);
+		opacity: 0;
+	}
+	10% {
+		opacity: 0.6;
+	}
+	90% {
+		opacity: 0.6;
+	}
+	100% {
+		transform: translate(100px, -100px);
+		opacity: 0;
+	}
+}
+
+@keyframes grid-move {
+	0% { transform: translate(0, 0); }
+	100% { transform: translate(50px, 50px); }
+}
+
+@keyframes portal-rotate {
+	from { transform: translate(-50%, -50%) rotate(0deg); }
+	to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes core-pulse {
+	0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+	50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+}
+
+@keyframes cosmic-item-appear {
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes sparkle-pop {
+	0% {
+		opacity: 0;
+		transform: translate(0, 0) scale(0);
+	}
+	50% {
+		opacity: 1;
+		transform: translate(var(--tx), var(--ty)) scale(1);
+	}
+	100% {
+		opacity: 0;
+		transform: translate(var(--tx), var(--ty)) scale(0);
+	}
+}
+
+/* Generate random sparkle positions */
+.btn-sparkles .sparkle:nth-child(1) { --tx: -20px; --ty: -15px; animation-delay: 0.1s; }
+.btn-sparkles .sparkle:nth-child(2) { --tx: 20px; --ty: -10px; animation-delay: 0.2s; }
+.btn-sparkles .sparkle:nth-child(3) { --tx: -15px; --ty: 10px; animation-delay: 0.3s; }
+.btn-sparkles .sparkle:nth-child(4) { --tx: 15px; --ty: 15px; animation-delay: 0.4s; }
+.btn-sparkles .sparkle:nth-child(5) { --tx: 0px; --ty: -20px; animation-delay: 0.5s; }
+.btn-sparkles .sparkle:nth-child(6) { --tx: 25px; --ty: 0px; animation-delay: 0.6s; }
+.btn-sparkles .sparkle:nth-child(7) { --tx: -25px; --ty: 5px; animation-delay: 0.7s; }
+.btn-sparkles .sparkle:nth-child(8) { --tx: 10px; --ty: -25px; animation-delay: 0.8s; }
+
+/* Enhanced Responsive Design */
+@media (max-width: 968px) {
+	.cosmic-navbar {
+		width: 90%;
+		padding: 1rem 1.5rem;
+	}
+	
+	.nav-links {
+		display: none;
+	}
+	
+	.hologram-burger {
+		display: flex;
+	}
+	
+	.logo-main {
+		font-size: 1.3rem;
+	}
+	
+	.logo-orb {
+		width: 40px;
+		height: 40px;
+	}
+	
+	.orb-core {
+		width: 16px;
+		height: 16px;
+	}
+}
+
+@media (max-width: 768px) {
+	.cosmic-navbar {
+		width: 85%;
+		padding: 0.8rem 1.2rem;
+	}
+	
+	.logo-text {
+		display: none;
+	}
+	
+	.cosmic-portal {
+		width: 250px;
+		height: 250px;
+	}
+	
+	.portal-ring.outer {
+		width: 250px;
+		height: 250px;
+	}
+	
+	.cosmic-nav-item {
+		font-size: 1.1rem;
+		padding: 1rem 2rem;
+	}
+}
+
+@media (max-width: 480px) {
+	.cosmic-navbar {
+		width: 90%;
+		padding: 0.6rem 1rem;
+		top: 0.5rem;
+	}
+	
+	.cosmic-portal {
+		width: 200px;
+		height: 200px;
+	}
+	
+	.portal-ring.outer {
+		width: 200px;
+		height: 200px;
+	}
+	
+	.portal-ring.middle {
+		width: 150px;
+		height: 150px;
+	}
+	
+	.portal-ring.inner {
+		width: 80px;
+		height: 80px;
+	}
+	
+	.cosmic-nav-item {
+		font-size: 1rem;
+		padding: 0.8rem 1.5rem;
+	}
+	
+	.hologram-burger {
+		width: 45px;
+		height: 45px;
+	}
+	
+	.hologram-line {
+		width: 22px;
+	}
+}
+
+/* Prevent body scroll when menu is open */
+body.menu-open {
+	overflow: hidden;
+}
+
+/* Smooth scrolling for the entire page */
+html {
+	scroll-behavior: smooth;
+}
