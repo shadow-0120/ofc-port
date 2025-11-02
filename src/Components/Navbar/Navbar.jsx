@@ -40,12 +40,12 @@ export default function Navbar() {
 
 	return (
 		<>
-			<header className={`cosmic-navbar ${scrolled ? "scrolled" : ""} ${open ? "menu-open" : ""}`}>
+			<header className={`classic-navbar ${scrolled ? "scrolled" : ""} ${open ? "menu-open" : ""}`}>
 				<div className="nav-inner">
 					<Link to="/" className="logo" aria-label="Home">
-						<div className="logo-orb">
-							<div className="orb-core"></div>
-							<div className="orb-glow"></div>
+						<div className="logo-emblem">
+							<div className="emblem-core"></div>
+							<div className="emblem-border"></div>
 						</div>
 						<div className="logo-text">
 							<span className="logo-main">KOUSSAI</span>
@@ -63,75 +63,65 @@ export default function Navbar() {
 									onMouseLeave={() => setHoveredIndex(null)}
 								>
 									<Link to={item.to}>
+										<span className="nav-icon">{item.icon}</span>
 										<span className="nav-label">{item.label}</span>
 										<div className="nav-underline"></div>
-										<div className="nav-glow"></div>
 									</Link>
 								</li>
 							))}
 						</ul>
-
-						
 					</nav>
 
 					<button
-						className={`hologram-burger ${open ? "is-active" : ""}`}
+						className={`classic-burger ${open ? "is-active" : ""}`}
 						aria-label={open ? "Close menu" : "Open menu"}
 						aria-expanded={open}
 						onClick={() => setOpen((s) => !s)}
 					>
-						<div className="hologram-line top"></div>
-						<div className="hologram-line middle"></div>
-						<div className="hologram-line bottom"></div>
-						<div className="hologram-glow"></div>
+						<div className="burger-line top"></div>
+						<div className="burger-line middle"></div>
+						<div className="burger-line bottom"></div>
 					</button>
 				</div>
 
-				{/* Animated Background Elements */}
-				<div className="cosmic-background">
-					<div className="nebula"></div>
-					<div className="floating-particles">
-						{Array.from({ length: 15 }).map((_, i) => (
-							<div key={i} className="particle"></div>
-						))}
-					</div>
-					<div className="energy-grid"></div>
+				{/* Classic Background Elements */}
+				<div className="classic-background">
+					<div className="nav-border"></div>
+					<div className="subtle-pattern"></div>
 				</div>
 			</header>
 
 			{/* Mobile Menu Overlay */}
-			<div className={`mobile-cosmic-menu ${open ? "active" : ""}`}>
-				<div className="cosmic-portal">
-					<div className="portal-ring outer"></div>
-					<div className="portal-ring middle"></div>
-					<div className="portal-ring inner"></div>
-					<div className="portal-core"></div>
+			<div className={`mobile-classic-menu ${open ? "active" : ""}`}>
+				<div className="classic-portal">
+					<div className="portal-ornament"></div>
 				</div>
 				
-				<nav className="cosmic-nav">
+				<nav className="classic-nav">
 					{navItems.map((item, index) => (
 						<Link
 							key={item.to}
 							to={item.to}
-							className={`cosmic-nav-item ${location.pathname === item.to ? "active" : ""}`}
+							className={`classic-nav-item ${location.pathname === item.to ? "active" : ""}`}
 							style={{ animationDelay: `${index * 0.1}s` }}
 							onClick={() => setOpen(false)}
 						>
-							<div className="cosmic-item-orb"></div>
-							<span className="cosmic-item-icon">{item.icon}</span>
-							<span className="cosmic-item-text">{item.label}</span>
-							<div className="cosmic-item-trail"></div>
+							<div className="classic-item-dot"></div>
+							<span className="classic-item-icon">{item.icon}</span>
+							<span className="classic-item-text">{item.label}</span>
 						</Link>
 					))}
 				</nav>
 
-				<div className="cosmic-cta">
-					<Link to="/resume" className="cosmic-resume-btn" onClick={() => setOpen(false)}>
+				<div className="classic-cta">
+					<Link to="/resume" className="classic-resume-btn" onClick={() => setOpen(false)}>
 						<span>View Resume</span>
-						<div className="quantum-ripple"></div>
+						<div className="btn-ornament"></div>
 					</Link>
 				</div>
 			</div>
+
+			
 		</>
 	);
 }

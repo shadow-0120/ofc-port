@@ -11,7 +11,6 @@ import AboutMe from "./AboutMe";
 import LatestProjects from "./LatestProjects";
 import ParticleBackground from "../../Components/ParticleBackground";
 import TestimonialCarousel from "../../Components/TestimonialCarousel";
-import InteractiveDemo from "../../Components/InteractiveDemo";
 import CTA from "../../Components/CTA";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -139,21 +138,6 @@ export default function Home() {
         }
       );
 
-      // Interactive demo parallax
-      gsap.fromTo(".interactive-demo", 
-        { y: 120, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: ".interactive-demo",
-            start: "top 85%",
-            end: "bottom 15%",
-            scrub: 1
-          }
-        }
-      );
 
       // CTA section parallax
       gsap.fromTo(".cta-section", 
@@ -231,7 +215,7 @@ export default function Home() {
     }
 
     // Scroll progress indicator - works on all devices
-    const sections = ['.home-section', '.about-me', '.latest-work-section', '.testimonial-carousel', '.interactive-demo', '.cta-section'];
+    const sections = ['.home-section', '.about-me', '.latest-work-section', '.testimonial-carousel', '.cta-section'];
     const dots = document.querySelectorAll('.scroll-dot');
     
     sections.forEach((section, index) => {
@@ -386,10 +370,6 @@ export default function Home() {
           <TestimonialCarousel />
         </div>
 
-        {/* Interactive Demo Section */}
-        <div className="interactive-demo" ref={demoRef}>
-          <InteractiveDemo />
-        </div>
 
         {/* CTA Section */}
         <div className="cta-section" ref={ctaRef}>
