@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, Calendar, User, Tag, ExternalLink, ChevronLeft, ChevronRight, Maximize2, X, Globe } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link , useParams} from 'react-router-dom'
 // Import projects data with real images and website links
 const projectsData = [
   {
@@ -63,6 +63,7 @@ const projectsData = [
 ]
 
 export default function ProjectDetail() {
+  const { id } = useParams()
   const [project, setProject] = useState(projectsData[0])
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [isLightboxOpen, setIsLightboxOpen] = useState(false)
@@ -70,7 +71,10 @@ export default function ProjectDetail() {
   const { scrollYProgress } = useScroll()
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8])
-
+ useEffect(() => {
+    const foundProject = projectsData.find(p => p.id === id)
+    setProject(foundProject || projectsData[0])
+  }, [id])
   useEffect(() => {
     const handleKeyPress = (e) => {
       if (isLightboxOpen) {
@@ -385,3 +389,12 @@ export default function ProjectDetail() {
     </div>
   )
 }
+
+
+
+
+
+
+  
+
+ 
