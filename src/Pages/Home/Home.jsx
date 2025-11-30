@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Lenis from "lenis";
 import { Link } from "react-router-dom";
 import "./home.css";
 import Stats from "./Stats";
@@ -27,192 +26,86 @@ export default function Home() {
   const floatingElementsRef = useRef(null);
 
   const initAnimations = useCallback(() => {
-    // Initialize Lenis smooth scroll
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: 'vertical',
-      gestureDirection: 'vertical',
-      smooth: true,
-      mouseMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
-      infinite: false,
-    });
-
-    // Connect Lenis with GSAP ScrollTrigger
-    lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
-    gsap.ticker.lagSmoothing(0);
-
-    // Only run complex animations on desktop
-    const isMobile = window.innerWidth < 768;
-    
-    if (!isMobile) {
-      // Hero section parallax animations
-      const heroTl = gsap.timeline({ defaults: { ease: "power3.out", duration: 1 } });
-
-      heroTl.fromTo(
-        textRef.current,
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1 }
-      ).fromTo(
-        nameRef.current,
-        { scale: 0.8, opacity: 0 },
-        { scale: 1, opacity: 1 },
-        "-=0.3"
-      );
-
-      // Hero background parallax
-      gsap.to(".home-section", {
-        backgroundPosition: "50% 100%",
-        ease: "none",
+    // Simple scroll-triggered animations without parallax (instant, no scrub)
+    // About section fade-in
+    gsap.fromTo(".about-me", 
+      { y: 50, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        ease: "power2.out",
+        duration: 0.6,
         scrollTrigger: {
-          trigger: ".home-section",
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1
+          trigger: ".about-me",
+          start: "top 85%",
+          toggleActions: "play none none none"
         }
-      });
+      }
+    );
 
-      // Hero content parallax
-      gsap.to(".home-information", {
-        y: -100,
-        ease: "none",
+    // Projects section fade-in
+    gsap.fromTo(".latest-work-section", 
+      { y: 50, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        ease: "power2.out",
+        duration: 0.6,
         scrollTrigger: {
-          trigger: ".home-section",
-          start: "top top",
-          end: "bottom top",
-          scrub: 1
+          trigger: ".latest-work-section",
+          start: "top 85%",
+          toggleActions: "play none none none"
         }
-      });
+      }
+    );
 
-      // About section parallax
-      gsap.fromTo(".about-me", 
-        { y: 100, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: ".about-me",
-            start: "top 80%",
-            end: "bottom 20%",
-            scrub: 1
-          }
-        }
-      );
-
-      // Projects section parallax
-      gsap.fromTo(".latest-work-section", 
-        { y: 150, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: ".latest-work-section",
-            start: "top 85%",
-            end: "bottom 15%",
-            scrub: 1
-          }
-        }
-      );
-
-      // Testimonials parallax
-      gsap.fromTo(".testimonial-carousel", 
-        { y: 100, opacity: 0, scale: 0.95 },
-        {
-          y: 0,
-          opacity: 1,
-          scale: 1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: ".testimonial-carousel",
-            start: "top 80%",
-            end: "bottom 20%",
-            scrub: 1
-          }
-        }
-      );
-
-
-      // CTA section parallax
-      gsap.fromTo(".cta-section", 
-        { y: 80, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: ".cta-section",
-            start: "top 80%",
-            end: "bottom 20%",
-            scrub: 1
-          }
-        }
-      );
-
-      // Floating elements parallax
-      gsap.to(".floating-circle", {
-        y: (i) => i * -50,
-        x: (i) => i * 30,
-        rotation: (i) => i * 45,
-        ease: "none",
+    // Testimonials fade-in
+    gsap.fromTo(".testimonial-carousel", 
+      { y: 50, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        ease: "power2.out",
+        duration: 0.6,
         scrollTrigger: {
-          trigger: ".home-section",
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1
+          trigger: ".testimonial-carousel",
+          start: "top 85%",
+          toggleActions: "play none none none"
         }
-      });
+      }
+    );
 
-      // Stats section parallax
-      gsap.fromTo(".stats-section", 
-        { y: 60, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: ".stats-section",
-            start: "top 80%",
-            end: "bottom 20%",
-            scrub: 1
-          }
-        }
-      );
-
-      // Curved text parallax
-      gsap.fromTo(".curved-text", 
-        { y: 40, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: ".curved-text",
-            start: "top 85%",
-            end: "bottom 15%",
-            scrub: 1
-          }
-        }
-      );
-
-      // Particle background parallax
-      gsap.to(".particle-background", {
-        y: -200,
-        ease: "none",
+    // CTA section fade-in
+    gsap.fromTo(".cta-section", 
+      { y: 50, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        ease: "power2.out",
+        duration: 0.6,
         scrollTrigger: {
-          trigger: ".home-section",
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1
+          trigger: ".cta-section",
+          start: "top 85%",
+          toggleActions: "play none none none"
         }
-      });
-    }
+      }
+    );
+
+    // Stats section fade-in
+    gsap.fromTo(".stats-section", 
+      { y: 30, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        ease: "power2.out",
+        duration: 0.6,
+        scrollTrigger: {
+          trigger: ".stats-section",
+          start: "top 85%",
+          toggleActions: "play none none none"
+        }
+      }
+    );
 
     // Scroll progress indicator - works on all devices
     const sections = ['.home-section', '.about-me', '.latest-work-section', '.testimonial-carousel', '.cta-section'];
@@ -234,12 +127,12 @@ export default function Home() {
       });
     });
 
-    // Add click handlers for scroll dots
+    // Add click handlers for scroll dots (using native scroll)
     dots.forEach((dot, index) => {
       dot.addEventListener('click', () => {
         const targetSection = document.querySelector(sections[index]);
         if (targetSection) {
-          lenis.scrollTo(targetSection, { duration: 1.5 });
+          targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       });
     });
@@ -247,7 +140,6 @@ export default function Home() {
     // Cleanup function
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-      lenis.destroy();
     };
   }, []);
 

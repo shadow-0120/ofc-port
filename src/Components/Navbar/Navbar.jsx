@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
 
@@ -7,6 +7,7 @@ export default function Navbar() {
 	const [scrolled, setScrolled] = useState(false);
 	const [hoveredIndex, setHoveredIndex] = useState(null);
 	const location = useLocation();
+	const navRef = useRef(null);
 
 	useEffect(() => {
 		const onScroll = () => setScrolled(window.scrollY > 20);
@@ -32,96 +33,144 @@ export default function Navbar() {
 	}, [open]);
 
 	const navItems = [
-		{ label: "Home", to: "/", icon: "" },
-		{ label: "Projects", to: "/projects", icon: "" },
-		{ label: "Services", to: "/services", icon: "" },
-		{ label: "Contact", to: "/contact", icon: "" },
+		{ label: "Home", to: "/" },
+		{ label: "Projects", to: "/projects" },
+		{ label: "Services", to: "/services" },
+		{ label: "Contact", to: "/contact" },
 	];
+
+	// Magnetic effect for nav items
+	const handleMouseMove = (e, index) => {
+		if (window.innerWidth <= 768) return;
+		const item = e.currentTarget;
+		const rect = item.getBoundingClientRect();
+		const x = e.clientX - rect.left - rect.width / 2;
+		const y = e.clientY - rect.top - rect.height / 2;
+		
+		item.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+	};
+
+	const handleMouseLeave = (e) => {
+		e.currentTarget.style.transform = 'translate(0, 0)';
+	};
 
 	return (
 		<>
-			<header className={`classic-navbar ${scrolled ? "scrolled" : ""} ${open ? "menu-open" : ""}`}>
-				<div className="nav-inner">
-					<Link to="/" className="logo" aria-label="Home">
-						<div className="logo-emblem">
-							<div className="emblem-core"></div>
-							<div className="emblem-border"></div>
-						</div>
-						<div className="logo-text">
-							<span className="logo-main">KOUSSAI</span>
-							<span className="logo-sub">MAHDI</span>
+			<header 
+				ref={navRef}
+				className={`modern-navbar ${scrolled ? "scrolled" : ""} ${open ? "menu-open" : ""}`}
+			>
+				<div className="nav-container">
+					{/* Logo Section */}
+					<Link to="/" className="nav-logo" aria-label="Home">
+						<div className="logo-wrapper">
+							<div className="logo-icon">
+								<div className="logo-gradient"></div>
+							</div>
+							<div className="logo-text-wrapper">
+								<span className="logo-name">KOUSSAI</span>
+								<span className="logo-surname">MAHDI</span>
+							</div>
 						</div>
 					</Link>
 
-					<nav className={`nav-links ${open ? "open" : ""}`} aria-label="Main Navigation">
-						<ul>
+					{/* Desktop Navigation */}
+					<nav className="nav-menu" aria-label="Main Navigation">
+						<ul className="nav-list">
 							{navItems.map((item, index) => (
 								<li 
 									key={item.to} 
 									className={`nav-item ${location.pathname === item.to ? "active" : ""}`}
 									onMouseEnter={() => setHoveredIndex(index)}
-									onMouseLeave={() => setHoveredIndex(null)}
+									onMouseMove={(e) => handleMouseMove(e, index)}
+									onMouseLeave={(e) => {
+										setHoveredIndex(null);
+										handleMouseLeave(e);
+									}}
 								>
-									<Link to={item.to}>
-										<span className="nav-icon">{item.icon}</span>
-										<span className="nav-label">{item.label}</span>
-										<div className="nav-underline"></div>
+									<Link to={item.to} className="nav-link">
+										<span className="nav-number">0{index + 1}</span>
+										<span className="nav-text">{item.label}</span>
+										<div className="nav-indicator"></div>
 									</Link>
 								</li>
 							))}
 						</ul>
 					</nav>
 
+					{/* CTA Button */}
+					<div className="nav-actions">
+						<Link to="/resume" className="nav-cta">
+							<span>Resume</span>
+							<svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+								<path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+							</svg>
+						</Link>
+					</div>
+
+					{/* Mobile Menu Button */}
 					<button
-						className={`classic-burger ${open ? "is-active" : ""}`}
+						className={`mobile-menu-btn ${open ? "active" : ""}`}
 						aria-label={open ? "Close menu" : "Open menu"}
 						aria-expanded={open}
 						onClick={() => setOpen((s) => !s)}
 					>
-						<div className="burger-line top"></div>
-						<div className="burger-line middle"></div>
-						<div className="burger-line bottom"></div>
+						<span className="menu-line"></span>
+						<span className="menu-line"></span>
+						<span className="menu-line"></span>
 					</button>
 				</div>
 
-				{/* Classic Background Elements */}
-				<div className="classic-background">
-					<div className="nav-border"></div>
-					<div className="subtle-pattern"></div>
-				</div>
+				{/* Background Blur Effect */}
+				<div className="nav-backdrop"></div>
 			</header>
 
 			{/* Mobile Menu Overlay */}
-			<div className={`mobile-classic-menu ${open ? "active" : ""}`}>
-				<div className="classic-portal">
-					<div className="portal-ornament"></div>
-				</div>
-				
-				<nav className="classic-nav">
-					{navItems.map((item, index) => (
-						<Link
-							key={item.to}
-							to={item.to}
-							className={`classic-nav-item ${location.pathname === item.to ? "active" : ""}`}
-							style={{ animationDelay: `${index * 0.1}s` }}
-							onClick={() => setOpen(false)}
-						>
-							<div className="classic-item-dot"></div>
-							<span className="classic-item-icon">{item.icon}</span>
-							<span className="classic-item-text">{item.label}</span>
+			<div className={`mobile-menu ${open ? "active" : ""}`}>
+				<div className="mobile-menu-backdrop" onClick={() => setOpen(false)}></div>
+				<div className="mobile-menu-content">
+					<div className="mobile-menu-header">
+						<Link to="/" className="mobile-logo" onClick={() => setOpen(false)}>
+							<div className="logo-wrapper">
+								<div className="logo-icon">
+									<div className="logo-gradient"></div>
+								</div>
+								<div className="logo-text-wrapper">
+									<span className="logo-name">KOUSSAI</span>
+									<span className="logo-surname">MAHDI</span>
+								</div>
+							</div>
 						</Link>
-					))}
-				</nav>
+					</div>
+					
+					<nav className="mobile-nav">
+						{navItems.map((item, index) => (
+							<Link
+								key={item.to}
+								to={item.to}
+								className={`mobile-nav-item ${location.pathname === item.to ? "active" : ""}`}
+								style={{ animationDelay: `${index * 0.08}s` }}
+								onClick={() => setOpen(false)}
+							>
+								<span className="mobile-nav-number">0{index + 1}</span>
+								<span className="mobile-nav-text">{item.label}</span>
+								<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+									<path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+								</svg>
+							</Link>
+						))}
+					</nav>
 
-				<div className="classic-cta">
-					<Link to="/resume" className="classic-resume-btn" onClick={() => setOpen(false)}>
-						<span>View Resume</span>
-						<div className="btn-ornament"></div>
-					</Link>
+					<div className="mobile-menu-footer">
+						<Link to="/resume" className="mobile-cta" onClick={() => setOpen(false)}>
+							<span>View Resume</span>
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+								<path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+							</svg>
+						</Link>
+					</div>
 				</div>
 			</div>
-
-			
 		</>
 	);
 }

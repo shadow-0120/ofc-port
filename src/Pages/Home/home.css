@@ -28,12 +28,10 @@ html {
     var(--bg-secondary) 50%,
     var(--bg-primary) 100%
   );
-  background-attachment: fixed;
   background-size: cover;
   background-position: 50% 0%;
   overflow: hidden;
   min-height: 100vh;
-  will-change: transform;
 }
 
 .home-section::before {
@@ -589,7 +587,7 @@ html {
 /* Small Mobile Devices */
 @media (max-width: 480px) {
   .home-section {
-    padding: 40px 12px;
+    padding: 140px 12px;
   }
   
   .home-information h1 {
@@ -598,7 +596,7 @@ html {
   }
   
   .available-work {
-    flex-direction: column;
+    flex-direction: row;
     gap: 8px;
     padding: 12px 20px;
   }

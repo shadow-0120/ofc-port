@@ -1,79 +1,57 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
-import { ArrowLeft, Calendar, User, Tag, ExternalLink, ChevronLeft, ChevronRight, Maximize2, X, Globe } from 'lucide-react'
-import { Link , useParams} from 'react-router-dom'
-// Import projects data with real images and website links
-const projectsData = [
-  {
-    id: 'sbs-school',
-    name: 'SBS School Management System',
-    description: 'A comprehensive school management platform with student tracking, grade management, and parent communication features. This project revolutionized how educational institutions manage their daily operations, providing real-time insights and seamless communication between teachers, students, and parents.',
-    date: '2024',
-    category: 'Web Application',
-    client: 'SBS Educational Group',
-    website: 'https://sbsschool-lilac.vercel.app',
-    technologies: ['React', 'Node.js', 'MongoDB', 'WebSocket'],
-    image: '/images/sbs/sbs1.png',
-    images: [
-      '/images/sbs/sbs1.png',
-      '/images/sbs/sbs2.png',
-      '/images/sbs/sbs3.png',
-      '/images/sbs/sbs4.png',
-      '/images/sbs/sbs5.png',
-      '/images/sbs/sbs6.png',
-      '/images/sbs/sbs7.png',
-      '/images/sbs/sbs8.png',
-      '/images/sbs/sbs9.png'
-    ]
-  },
-  {
-    id: 'joker-project',
-    name: 'Joker Platform',
-    description: 'An innovative platform with advanced features, real-time multiplayer capabilities, and immersive user experience. Built with cutting-edge technologies to provide seamless gaming experiences for players worldwide.',
-    date: '2024',
-    category: 'Gaming Platform',
-    client: 'Joker Entertainment',
-    website: 'https://jokeresgen.com',
-    technologies: ['Three.js', 'WebGL', 'Socket.io', 'Redis'],
-    image: '/images/joker/joker.png',
-    images: [
-      '/images/joker/joker.png',
-      '/images/joker/joker1.png',
-      '/images/joker/joker2.png',
-      '/images/joker/joker4.png',
-      '/images/joker/joker5.png'
-    ]
-  },
-  {
-    id: 'kahina-hotel',
-    name: 'Kahina Hotel Management System',
-    description: 'A comprehensive hotel management solution with booking system, guest services, and operational analytics. This platform streamlines hotel operations and enhances guest experience through digital innovation.',
-    date: '2023',
-    category: 'Hospitality',
-    client: 'Kahina Hotel Group',
-    website: 'https://kahina-vert.vercel.app',
-    technologies: ['Vue.js', 'Laravel', 'MySQL', 'Stripe'],
-    image: '/images/kahina-hotel/kahina.png',
-    images: [
-      '/images/kahina-hotel/kahina.png',
-      '/images/kahina-hotel/kahina1.png',
-      '/images/kahina-hotel/kahina2.png'
-    ]
-  }
-]
+import { ArrowLeft, Calendar, User, Tag, ExternalLink, ChevronLeft, ChevronRight, Maximize2, X, Globe, Loader2, AlertCircle } from 'lucide-react'
+import { Link, useParams, useNavigate } from 'react-router-dom'
+import { getProjectById, getAllProjects } from '../../firebase/projects'
 
 export default function ProjectDetail() {
   const { id } = useParams()
-  const [project, setProject] = useState(projectsData[0])
+  const navigate = useNavigate()
+  const [project, setProject] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [isLightboxOpen, setIsLightboxOpen] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState(0)
   const { scrollYProgress } = useScroll()
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8])
- useEffect(() => {
-    const foundProject = projectsData.find(p => p.id === id)
-    setProject(foundProject || projectsData[0])
+
+  useEffect(() => {
+    const fetchProject = async () => {
+      try {
+        setLoading(true)
+        setError(null)
+        // Try to find by custom ID first, then by document ID
+        const allProjects = await getAllProjects()
+        let projectData = allProjects.find(p => p.id === id)
+        
+        // If not found by custom ID, try by document ID
+        if (!projectData) {
+          projectData = allProjects.find(p => p.docId === id)
+        }
+        
+        // If still not found, try direct Firestore lookup
+        if (!projectData) {
+          projectData = await getProjectById(id)
+        }
+        
+        if (projectData) {
+          setProject(projectData)
+        } else {
+          setError('Project not found')
+        }
+      } catch (err) {
+        console.error('Error fetching project:', err)
+        setError(err.message || 'Failed to load project')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    if (id) {
+      fetchProject()
+    }
   }, [id])
   useEffect(() => {
     const handleKeyPress = (e) => {
@@ -104,6 +82,36 @@ export default function ProjectDetail() {
 
   const prevLightboxImage = () => {
     setLightboxIndex((lightboxIndex - 1 + project.images.length) % project.images.length)
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-12 h-12 text-violet-500 animate-spin mx-auto mb-4" />
+          <p className="text-gray-400">Loading project...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (error || !project) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white flex items-center justify-center">
+        <div className="text-center">
+          <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
+          <p className="text-red-400 mb-2 text-xl font-semibold">Project Not Found</p>
+          <p className="text-gray-500 mb-6">{error || 'The project you are looking for does not exist.'}</p>
+          <Link
+            to="/projects"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 rounded-full font-semibold transition-all duration-300"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            Back to Projects
+          </Link>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -164,19 +172,21 @@ export default function ProjectDetail() {
           </motion.p>
 
           {/* Visit Website Button */}
-          <motion.a
-            href={project.website}
-            target="_blank"
-            rel="noopener noreferrer"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-violet-500/50 group"
-          >
-            <Globe className="w-5 h-5" />
-            <span>Visit Live Website</span>
-            <ExternalLink className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-          </motion.a>
+          {project.website && (
+            <motion.a
+              href={project.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-violet-500/50 group"
+            >
+              <Globe className="w-5 h-5" />
+              <span>Visit Live Website</span>
+              <ExternalLink className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+            </motion.a>
+          )}
         </div>
       </motion.section>
 
@@ -229,16 +239,18 @@ export default function ProjectDetail() {
                   </div>
                 </div>
 
-                <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
-                  <p className="text-sm text-gray-400 mb-3">Technologies</p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech, index) => (
-                      <span key={index} className="px-3 py-1 bg-white/10 rounded-full text-sm font-medium">
-                        {tech}
-                      </span>
-                    ))}
+                {project.technologies && project.technologies.length > 0 && (
+                  <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
+                    <p className="text-sm text-gray-400 mb-3">Technologies</p>
+                    <div className="flex flex-wrap gap-2">
+                      {project.technologies.map((tech, index) => (
+                        <span key={index} className="px-3 py-1 bg-white/10 rounded-full text-sm font-medium">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>
@@ -362,17 +374,22 @@ export default function ProjectDetail() {
               Ready to see it in action?
             </h3>
             <p className="text-gray-400 text-lg mb-8">
-              Experience the full functionality of {project.name} by visiting the live website
+              {project.website 
+                ? `Experience the full functionality of ${project.name} by visiting the live website`
+                : `Learn more about ${project.name} and its features`
+              }
             </p>
-            <a
-              href={project.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-violet-500/50 group"
-            >
-              <span>Explore Live Website</span>
-              <ExternalLink className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-            </a>
+            {project.website && (
+              <a
+                href={project.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-violet-500/50 group"
+              >
+                <span>Explore Live Website</span>
+                <ExternalLink className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+              </a>
+            )}
           </motion.div>
         </div>
       </section>
@@ -389,12 +406,3 @@ export default function ProjectDetail() {
     </div>
   )
 }
-
-
-
-
-
-
-  
-
- 

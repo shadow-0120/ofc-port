@@ -1,62 +1,67 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import { getAllProjects } from '../../firebase/projects'
+import { Loader2, AlertCircle } from 'lucide-react'
 import './Projects.css'
 
-const projectsData = [
-  {
-    id: 'sbs-school',
-    name: 'SBS School Management System',
-    description: 'A comprehensive school management platform with student tracking, grade management, and parent communication features.',
-    date: '2024',
-    category: 'Web Application',
-    client: 'SBS Educational Group',
-    image: '/images/sbs/sbs1.png',
-    images: [
-      '/images/sbs/sbs1.png',
-      '/images/sbs/sbs2.png',
-      '/images/sbs/sbs3.png',
-      '/images/sbs/sbs4.png',
-      '/images/sbs/sbs5.png',
-      '/images/sbs/sbs6.png',
-      '/images/sbs/sbs7.png',
-      '/images/sbs/sbs8.png',
-      '/images/sbs/sbs9.png'
-    ]
-  },
-  {
-    id: 'joker-project',
-    name: 'Joker Club Platform',
-    description: 'An innovative  platform with advanced features, real-time multiplayer capabilities, and immersive user experience.',
-    date: '2024',
-    category: 'Gaming Platform',
-    client: 'Joker Entertainment',
-    image: '/images/joker/joker.png',
-    images: [
-      '/images/joker/joker.png',
-      '/images/joker/joker1.png',
-      '/images/joker/joker2.png',
-      '/images/joker/joker4.png',
-      '/images/joker/joker5.png'
-    ]
-  },
-  {
-    id: 'kahina-hotel',
-    name: 'Kahina Hotel Management System',
-    description: 'A comprehensive hotel management solution with booking system, guest services, and operational analytics.',
-    date: '2023',
-    category: 'Hospitality',
-    client: 'Kahina Hotel Group',
-    image: '/images/kahina-hotel/kahina.png',
-    images: [
-      '/images/kahina-hotel/kahina.png',
-      '/images/kahina-hotel/kahina1.png',
-      '/images/kahina-hotel/kahina2.png'
-    ]
-  }
-]
-
 export default function Projects() {
+  const [projectsData, setProjectsData] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        setLoading(true)
+        const projects = await getAllProjects()
+        setProjectsData(projects)
+        setError(null)
+      } catch (err) {
+        console.error('Error fetching projects:', err)
+        setError(err.message)
+        // Fallback to empty array if fetch fails
+        setProjectsData([])
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchProjects()
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="projects-container min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-12 h-12 text-violet-500 animate-spin mx-auto mb-4" />
+          <p className="text-gray-400">Loading projects...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="projects-container min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
+          <p className="text-red-400 mb-2">Failed to load projects</p>
+          <p className="text-gray-500 text-sm">{error}</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (projectsData.length === 0) {
+    return (
+      <div className="projects-container min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-400 text-lg">No projects available at the moment.</p>
+        </div>
+      </div>
+    )
+  }
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}

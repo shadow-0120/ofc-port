@@ -16,6 +16,7 @@
     "@react-three/fiber": "^9.3.0",
     "@tailwindcss/vite": "^4.1.12",
     "@use-gesture/react": "^10.3.1",
+    "firebase": "^12.6.0",
     "framer-motion": "^12.23.15",
     "gsap": "^3.13.0",
     "html2canvas": "^1.4.1",
