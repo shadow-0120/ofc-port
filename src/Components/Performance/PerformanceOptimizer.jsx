@@ -5,9 +5,6 @@ const PerformanceOptimizer = () => {
     // Preload critical resources
     const preloadResources = () => {
       const criticalResources = [
-        { href: '/images/photo1.jpg', as: 'image' },
-        { href: '/images/photo2.jpg', as: 'image' },
-        { href: '/models/model1.glb', as: 'fetch' }
       ];
 
       criticalResources.forEach(resource => {
@@ -27,7 +24,7 @@ const PerformanceOptimizer = () => {
         if (!img.hasAttribute('loading')) {
           img.setAttribute('loading', 'lazy');
         }
-        
+
         // Add decoding="async" for better performance
         if (!img.hasAttribute('decoding')) {
           img.setAttribute('decoding', 'async');

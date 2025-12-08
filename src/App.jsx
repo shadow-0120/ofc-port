@@ -22,8 +22,6 @@ export default function App() {
   useEffect(() => {
     preloadResources([
       { href: '/assets/videos/home-video.mp4', as: 'video' },
-      { href: '/images/photo1.jpg', as: 'image' },
-      { href: '/models/model1.glb', as: 'fetch' },
     ]);
   }, []);
 
