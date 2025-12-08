@@ -107,7 +107,7 @@ const CTA = () => {
         >
           <div className="footer-content">
             <p className="copyright">
-              © 2024 Koussai Mahdi. All rights reserved.
+              © 2025 Koussai Mahdi. All rights reserved.
             </p>
             <button 
               className="go-back-button"

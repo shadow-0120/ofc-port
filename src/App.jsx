@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import CinematicSplashScreen from './Components/SplashScreen/CinematicSplashScreen';
 import Navbar from './Components/Navbar/Navbar';
 import PerformanceOptimizer from './Components/Performance/PerformanceOptimizer';
-import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
 import { preloadResources } from './utils/performance';
 
 // Lazy load pages for better performance
@@ -14,8 +13,6 @@ const Projects = lazy(() => import('./Pages/Projects/Projects'));
 const ProjectDetail = lazy(() => import('./Pages/ProjectDetail/ProjectDetail'));
 const Contact = lazy(() => import('./Pages/Contact/Contact'));
 const Resume = lazy(() => import('./Pages/Resume/Resume'));
-const AdminLogin = lazy(() => import('./Pages/AdminDashboard/Login'));
-const AdminDashboard = lazy(() => import('./Pages/AdminDashboard/Dashboard'));
 
 export default function App() {
   const [showSplash, setShowSplash] = useState(true);
@@ -73,16 +70,6 @@ export default function App() {
               <Route path="/project/:id" element={<ProjectDetail />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/resume" element={<Resume />} />
-              {/* Admin Routes */}
-              <Route path="/admin-dashboard/login" element={<AdminLogin />} />
-              <Route
-                path="/admin-dashboard"
-                element={
-                  <ProtectedRoute>
-                    <AdminDashboard />
-                  </ProtectedRoute>
-                }
-              />
             </Routes>
           </Suspense>
         </main>
@@ -96,7 +83,7 @@ function ConditionalNavbar() {
   const location = useLocation();
 
   // Add any path prefixes where you want to hide the navbar
-  const hideNavbarOn = ['/project/', '/admin-dashboard'];
+  const hideNavbarOn = ['/project/', '/resume'];
 
   // Check if current route starts with any of those prefixes
   const shouldHideNavbar = hideNavbarOn.some(path =>

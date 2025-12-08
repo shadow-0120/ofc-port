@@ -2,8 +2,8 @@
 :root {
   --font-playfair: 'Playfair Display', serif;
   --font-instrument-sans: 'Instrument Sans', sans-serif;
-  --primary-color: #667eea;
-  --secondary-color: #764ba2;
+  --primary-color: #ffffff41;
+  --secondary-color: #141212;
   --text-primary: #ffffff;
   --text-secondary: #a8a8a8;
   --bg-primary: rgba(0, 0, 0, 0.95);
@@ -22,12 +22,7 @@ html {
   flex-direction: column;
   padding: clamp(80px, 15vw, 160px) clamp(15px, 5vw, 40px);
   position: relative;
-  background: linear-gradient(
-    135deg,
-    var(--bg-primary) 0%,
-    var(--bg-secondary) 50%,
-    var(--bg-primary) 100%
-  );
+  background: black;
   background-size: cover;
   background-position: 50% 0%;
   overflow: hidden;

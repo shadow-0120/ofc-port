@@ -5,11 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Link } from "react-router-dom";
 import "./home.css";
 import Stats from "./Stats";
-import CurvedLoop from './CurvedLoop';
-import AboutMe from "./AboutMe";
 import LatestProjects from "./LatestProjects";
-import ParticleBackground from "../../Components/ParticleBackground";
-import TestimonialCarousel from "../../Components/TestimonialCarousel";
 import CTA from "../../Components/CTA";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -18,10 +14,7 @@ export default function Home() {
   const textRef = useRef(null);
   const nameRef = useRef(null);
   const heroRef = useRef(null);
-  const aboutRef = useRef(null);
   const projectsRef = useRef(null);
-  const testimonialsRef = useRef(null);
-  const demoRef = useRef(null);
   const ctaRef = useRef(null);
   const floatingElementsRef = useRef(null);
 
@@ -157,11 +150,7 @@ export default function Home() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
-        {/* Particle Background */}
-        <div className="particle-background">
-          <ParticleBackground />
-        </div>
-
+       
         {/* Hero Section */}
         <div className="home-content-wrapper">
           <motion.div 
@@ -223,43 +212,13 @@ export default function Home() {
             <Stats/>
           </motion.div>
           
-          {/* Curved Text Section */}
-          <motion.div 
-            className="curved-text"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1.4 }}
-          >
-            <CurvedLoop 
-              marqueeText="✦ Hello ✦ In ✦ My ✦ Portfolio ✦"
-              speed={3}
-              curveAmount={500}
-              direction="right"
-              interactive={true}
-              className="custom-text-style"
-            />
-          </motion.div>
+         
         </div>
 
-        {/* About Me Section */}
-        <motion.div 
-          className="about-me"
-          ref={aboutRef}
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.6 }}
-        >
-          <AboutMe/>
-        </motion.div>
 
         {/* Latest Projects Section */}
         <div className="latest-work-section" ref={projectsRef}>
           <LatestProjects />
-        </div>
-
-        {/* Testimonial Carousel Section */}
-        <div className="testimonial-carousel" ref={testimonialsRef}>
-          <TestimonialCarousel />
         </div>
 
 
@@ -309,14 +268,7 @@ export default function Home() {
         </div>
 
         {/* Scroll Progress Indicator */}
-        <div className="scroll-indicator">
-          <div className="scroll-dot active" data-section="hero"></div>
-          <div className="scroll-dot" data-section="about"></div>
-          <div className="scroll-dot" data-section="projects"></div>
-          <div className="scroll-dot" data-section="testimonials"></div>
-          <div className="scroll-dot" data-section="demo"></div>
-          <div className="scroll-dot" data-section="cta"></div>
-        </div>
+      
       </motion.section>
     </>
   );

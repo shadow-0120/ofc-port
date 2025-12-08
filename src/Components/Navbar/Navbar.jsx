@@ -1,13 +1,11 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
 
 export default function Navbar() {
 	const [open, setOpen] = useState(false);
 	const [scrolled, setScrolled] = useState(false);
-	const [hoveredIndex, setHoveredIndex] = useState(null);
 	const location = useLocation();
-	const navRef = useRef(null);
 
 	useEffect(() => {
 		const onScroll = () => setScrolled(window.scrollY > 20);
@@ -39,59 +37,27 @@ export default function Navbar() {
 		{ label: "Contact", to: "/contact" },
 	];
 
-	// Magnetic effect for nav items
-	const handleMouseMove = (e, index) => {
-		if (window.innerWidth <= 768) return;
-		const item = e.currentTarget;
-		const rect = item.getBoundingClientRect();
-		const x = e.clientX - rect.left - rect.width / 2;
-		const y = e.clientY - rect.top - rect.height / 2;
-		
-		item.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
-	};
-
-	const handleMouseLeave = (e) => {
-		e.currentTarget.style.transform = 'translate(0, 0)';
-	};
-
 	return (
 		<>
-			<header 
-				ref={navRef}
+			<header
 				className={`modern-navbar ${scrolled ? "scrolled" : ""} ${open ? "menu-open" : ""}`}
 			>
 				<div className="nav-container">
 					{/* Logo Section */}
 					<Link to="/" className="nav-logo" aria-label="Home">
-						<div className="logo-wrapper">
-							<div className="logo-icon">
-								<div className="logo-gradient"></div>
-							</div>
-							<div className="logo-text-wrapper">
-								<span className="logo-name">KOUSSAI</span>
-								<span className="logo-surname">MAHDI</span>
-							</div>
-						</div>
+						<span className="logo-text">KOUSSAI MAHDI</span>
 					</Link>
 
 					{/* Desktop Navigation */}
 					<nav className="nav-menu" aria-label="Main Navigation">
 						<ul className="nav-list">
-							{navItems.map((item, index) => (
-								<li 
-									key={item.to} 
-									className={`nav-item ${location.pathname === item.to ? "active" : ""}`}
-									onMouseEnter={() => setHoveredIndex(index)}
-									onMouseMove={(e) => handleMouseMove(e, index)}
-									onMouseLeave={(e) => {
-										setHoveredIndex(null);
-										handleMouseLeave(e);
-									}}
-								>
-									<Link to={item.to} className="nav-link">
-										<span className="nav-number">0{index + 1}</span>
-										<span className="nav-text">{item.label}</span>
-										<div className="nav-indicator"></div>
+							{navItems.map((item) => (
+								<li key={item.to} className="nav-item">
+									<Link
+										to={item.to}
+										className={`nav-link ${location.pathname === item.to ? "active" : ""}`}
+									>
+										{item.label}
 									</Link>
 								</li>
 							))}
@@ -101,10 +67,7 @@ export default function Navbar() {
 					{/* CTA Button */}
 					<div className="nav-actions">
 						<Link to="/resume" className="nav-cta">
-							<span>Resume</span>
-							<svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-								<path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-							</svg>
+							Resume
 						</Link>
 					</div>
 
@@ -117,59 +80,45 @@ export default function Navbar() {
 					>
 						<span className="menu-line"></span>
 						<span className="menu-line"></span>
-						<span className="menu-line"></span>
 					</button>
 				</div>
-
-				{/* Background Blur Effect */}
-				<div className="nav-backdrop"></div>
 			</header>
 
 			{/* Mobile Menu Overlay */}
 			<div className={`mobile-menu ${open ? "active" : ""}`}>
-				<div className="mobile-menu-backdrop" onClick={() => setOpen(false)}></div>
 				<div className="mobile-menu-content">
 					<div className="mobile-menu-header">
 						<Link to="/" className="mobile-logo" onClick={() => setOpen(false)}>
-							<div className="logo-wrapper">
-								<div className="logo-icon">
-									<div className="logo-gradient"></div>
-								</div>
-								<div className="logo-text-wrapper">
-									<span className="logo-name">KOUSSAI</span>
-									<span className="logo-surname">MAHDI</span>
-								</div>
-							</div>
+							KOUSSAI MAHDI
 						</Link>
+						<button
+							className="mobile-close-btn"
+							onClick={() => setOpen(false)}
+							aria-label="Close menu"
+						>
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+								<path d="M18 6L6 18M6 6l12 12" />
+							</svg>
+						</button>
 					</div>
-					
+
 					<nav className="mobile-nav">
-						{navItems.map((item, index) => (
+						{navItems.map((item) => (
 							<Link
 								key={item.to}
 								to={item.to}
 								className={`mobile-nav-item ${location.pathname === item.to ? "active" : ""}`}
-								style={{ animationDelay: `${index * 0.08}s` }}
 								onClick={() => setOpen(false)}
 							>
-								<span className="mobile-nav-number">0{index + 1}</span>
-								<span className="mobile-nav-text">{item.label}</span>
-								<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-									<path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-								</svg>
+								{item.label}
 							</Link>
 						))}
-					</nav>
-
-					<div className="mobile-menu-footer">
-						<Link to="/resume" className="mobile-cta" onClick={() => setOpen(false)}>
-							<span>View Resume</span>
-							<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-								<path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-							</svg>
+						<Link to="/resume" className="mobile-nav-item highlight" onClick={() => setOpen(false)}>
+							Resume
 						</Link>
-					</div>
+					</nav>
 				</div>
+				<div className="mobile-backdrop" onClick={() => setOpen(false)}></div>
 			</div>
 		</>
 	);
