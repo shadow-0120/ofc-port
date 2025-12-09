@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import CinematicSplashScreen from './Components/SplashScreen/CinematicSplashScreen';
 import Navbar from './Components/Navbar/Navbar';
 import PerformanceOptimizer from './Components/Performance/PerformanceOptimizer';
-import { preloadResources } from './utils/performance';
+
 
 // Lazy load pages for better performance
 const Home = lazy(() => import('./Pages/Home/Home'));
@@ -18,12 +18,7 @@ export default function App() {
   const [showSplash, setShowSplash] = useState(true);
   const [isFirstLoad, setIsFirstLoad] = useState(true);
 
-  // Preload critical resources
-  useEffect(() => {
-    preloadResources([
-      { href: '/assets/videos/home-video.mp4', as: 'video' },
-    ]);
-  }, []);
+  
 
   // Show splash screen on page reload/refresh
   useEffect(() => {
