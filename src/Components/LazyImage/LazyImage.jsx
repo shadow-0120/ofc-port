@@ -4,7 +4,6 @@ const LazyImage = ({
   src, 
   alt, 
   className = '', 
-  placeholder = '/images/photo1.jpg',
   ...props 
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
