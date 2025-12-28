@@ -12,7 +12,7 @@ To achieve fast and scalable real-time performance, the application uses Redis a
 For durable and reliable storage, Upstash is used to permanently store messages and critical data when persistence is required. This combination of Redis and Upstash ensures both speed and reliability, balancing in-memory performance with secure, long-term data storage.
 
 Overall, this chat app is built to be secure, scalable, and privacy-focused, making it ideal for users who value confidentiality, responsiveness, and modern messaging experiences.`,
-        image: '/images/realtiem/realtiem.png',
+        image: '/images/realtime/realtime.png',
         techUsed: ['NextJS','TailwindCSS', 'Redis', 'Upstach', 'ElysiaJS', 'Zod'],
         sourceLink: 'https://github.com/shadow-0120/realtime',
         liveLink: ' https://realtiem-mu.vercel.app ' , 
