@@ -1,5 +1,38 @@
 export const projectsData = [
     {
+        id: 'realtime-chat',
+        title: 'Realtime Chat App',
+        shortDescription: 'An end-to-end encrypted, ephemeral chat application built for speed, privacy, and reliability—leveraging Redis for high-performance caching and Upstash for secure, persistent message storage.',
+        fullDescription: `This application is a modern, privacy-first chat platform designed to deliver secure, real-time communication with a strong focus on performance and data protection. All conversations are protected with end-to-end encryption, ensuring that only the intended participants can read the messages—no third parties, including the platform itself, can access message content.
+
+The app supports ephemeral messaging, allowing messages to automatically expire and disappear after a defined period. This feature enhances user privacy by reducing long-term data exposure and giving users full control over how long their conversations exist.
+
+To achieve fast and scalable real-time performance, the application uses Redis as a caching layer. Redis enables low-latency message delivery, efficient session management, and smooth real-time interactions even under high traffic.
+
+For durable and reliable storage, Upstash is used to permanently store messages and critical data when persistence is required. This combination of Redis and Upstash ensures both speed and reliability, balancing in-memory performance with secure, long-term data storage.
+
+Overall, this chat app is built to be secure, scalable, and privacy-focused, making it ideal for users who value confidentiality, responsiveness, and modern messaging experiences.`,
+        image: '/images/realtiem/realtiem.png',
+        techUsed: ['NextJS','TailwindCSS', 'Redis', 'Upstach', 'ElysiaJS', 'Zod'],
+        sourceLink: 'https://github.com/shadow-0120/realtime',
+        liveLink: ' https://realtiem-mu.vercel.app ' , 
+        gallery: [
+            '/images/realtime/realtime.png',
+            '/images/realtime/realtime-1.png',
+            '/images/realtime/realtime-2.png',
+        ],
+        features : [
+            'End-to-End Encryption – Messages are fully encrypted so only participants can read them',
+            'Ephemeral Messaging – Messages automatically expire and disappear after a set time',
+            'Real-Time Chat – Instant message delivery with low latency',
+            'High Performance – Redis-powered caching for fast message handling and sessions',
+            'Smart Caching Layer – Efficient data caching to reduce database load',
+            'Scalable Architecture – Designed to handle growing users and traffic'
+        ],
+        date: '2026',
+        category: 'Web App',
+    },
+    {
         id: 'wamda-book',
         title : 'Wamda Book',
         shortDescription : 'An online platform for book enthusiasts to discover, review, and share their favorite reads.',
