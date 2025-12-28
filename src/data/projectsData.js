@@ -15,7 +15,7 @@ Overall, this chat app is built to be secure, scalable, and privacy-focused, mak
         image: '/images/realtime/realtime.png',
         techUsed: ['NextJS','TailwindCSS', 'Redis', 'Upstach', 'ElysiaJS', 'Zod'],
         sourceLink: 'https://github.com/shadow-0120/realtime',
-        liveLink: ' https://realtiem-mu.vercel.app ' , 
+        liveLink: ' https://realtime-mu.vercel.app ' , 
         gallery: [
             '/images/realtime/realtime.png',
             '/images/realtime/realtime-1.png',
