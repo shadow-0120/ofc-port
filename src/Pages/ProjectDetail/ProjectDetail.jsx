@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ArrowLeft, Github, ExternalLink, Code2, Layers, Image as ImageIcon } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowLeft, Github, ExternalLink, Code2, Layers, Image as ImageIcon, X } from 'lucide-react';
 import { projectsData } from '../../data/projectsData';
 import './ProjectDetail.css';
 
 export default function ProjectDetail() {
     const { id } = useParams();
+    const [selectedImage, setSelectedImage] = React.useState(null);
     const project = projectsData.find(p => p.id === id);
 
     useEffect(() => {
@@ -133,9 +134,16 @@ export default function ProjectDetail() {
                         </div>
                         <div className="gallery-grid">
                             {project.gallery.map((img, idx) => (
-                                <div key={idx} className="gallery-image-wrapper">
+                                <motion.div
+                                    key={idx}
+                                    className="gallery-image-wrapper cursor-pointer"
+                                    onClick={() => setSelectedImage(img)}
+                                    layoutId={`gallery-img-${idx}`}
+                                    whileHover={{ scale: 1.02 }}
+                                    transition={{ duration: 0.2 }}
+                                >
                                     <img src={img} alt={`Gallery ${idx + 1}`} className="gallery-img" />
-                                </div>
+                                </motion.div>
                             ))}
                         </div>
                     </motion.div>
@@ -147,6 +155,39 @@ export default function ProjectDetail() {
                     <ArrowLeft size={16} /> Back to All Projects
                 </Link>
             </div>
+
+            {/* Image Preview Modal */}
+            <AnimatePresence>
+                {selectedImage && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[1100] flex items-center justify-center bg-black/95 p-4 backdrop-blur-sm"
+                        onClick={() => setSelectedImage(null)}
+                    >
+                        <motion.button
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors p-2 z-[1101]"
+                        >
+                            <X size={32} />
+                        </motion.button>
+
+                        <motion.img
+                            src={selectedImage}
+                            alt="Preview"
+                            className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                            onClick={(e) => e.stopPropagation()}
+                        />
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
